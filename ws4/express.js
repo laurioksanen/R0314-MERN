@@ -6,15 +6,17 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static("./"));
+
 app.get("/",(req,res)=>{
     res.sendFile(__dirname + "/index.html")
 });
 
-app.post("/kirjaudu",(req,res)=>{
-    console.log(req.body);
-    var email = req.body.email;
-    var pass = req.body.pass;
-  res.send("Lähetit lomakkeen! Email: " + email + " Password: " + pass);
+app.get("/kirjaudu",(req,res)=>{
+//     console.log(req.body);
+//     var email = req.body.email;
+//     var pass = req.body.pass;
+//   res.send("Lähetit lomakkeen! Email: " + email + " Password: " + pass);
+res.sendFile(__dirname + "/lomake.html")
 })
 
 app.get("/list",(req,res)=>{
@@ -30,9 +32,10 @@ app.get("/json",(req,res)=>{
 
 app.post("/add",(req,res)=>{
     var jsondata = require("./examplejson.json")
+    console.log("Nimi: "+req.body.Name+"\nEmail: "+req.body.email +"\nCompany: " + req.body.Company)
     jsondata.push({
         "Name": req.body.Name,
-        "Email" : req.body.Email,
+        "Email" : req.body.email,
         "Date" : new Date(),
         "Company": req.body.Company
     });
